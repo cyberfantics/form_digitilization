@@ -36,8 +36,56 @@ while True:
     # Display Text On Screen
     if display_text:
         # Update scores and instructions
-        cv2.putText(bgImg, f"{extract_text}", (720,121), cv2.FONT_HERSHEY_PLAIN, 4, (0, 255, 0), 3)
-   
+        cv2.putText(bgImg, f"Name", (730,180), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 255), 4)   
+        cv2.putText(bgImg, f"{extract_text['Name']}", (835,180), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 4)
+        
+        # Update scores and instructions
+        cv2.putText(bgImg, f"F. Name", (730,210), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 255), 4)   
+        cv2.putText(bgImg, f"{extract_text["Father's Name"]}", (840,210), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 4)
+        
+        # Update scores and instructions
+        cv2.putText(bgImg, f"CNIC", (730,240), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 255), 4)   
+        cv2.putText(bgImg, f"{extract_text['CNIC/B.Form No']}", (835,240), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 4)
+        
+        # Update scores and instructions
+        cv2.putText(bgImg, f"Domicile", (730,270), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 255), 4)   
+        cv2.putText(bgImg, f"{extract_text['Domicile']}", (835,270), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 4)
+        
+       # Update scores and instructions
+        cv2.putText(bgImg, f"P. No", (730,300), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 255), 4)   
+        cv2.putText(bgImg, f"{extract_text['Phone No']}", (835,300), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 4)
+        
+       # Update scores and instructions
+        cv2.putText(bgImg, f"Form No", (730,330), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 255), 4)   
+        cv2.putText(bgImg, f"{extract_text['Form No']}", (855,330), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 4)
+        
+  
+       # Update scores and instructions
+        cv2.putText(bgImg, f"Gender", (730,360), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 255), 4)   
+        cv2.putText(bgImg, f"{extract_text['Gender']}", (840,360), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 4)
+  
+       # Update scores and instructions
+        cv2.putText(bgImg, f"Address", (730,390), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 255), 4)   
+        cv2.putText(bgImg, f"{extract_text['Address']}", (855,390), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 4)
+        
+    # Update scores and instructions
+        cv2.putText(bgImg, f"City", (730,420), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 255), 4)   
+        cv2.putText(bgImg, f"{extract_text['City']}", (835,420), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 4)
+        
+  
+       # Update scores and instructions
+        cv2.putText(bgImg, f"Postal Code", (730,450), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 255), 4)   
+        cv2.putText(bgImg, f"{extract_text['Postal Code']}", (865,450), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 4)
+  
+       # Update scores and instructions
+        cv2.putText(bgImg, f"Category", (730,480), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 255), 4)   
+        cv2.putText(bgImg, f"{extract_text['Category']}", (835,480), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 4)
+        
+
+       # Update scores and instructions
+        cv2.putText(bgImg, f"Subject", (730,510), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 255), 4)   
+        cv2.putText(bgImg, f"{extract_text['Choice of Subject']}", (835,510), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 4)
+        
 
     # Store the original frame for processing
     original_frame = frame.copy()
@@ -69,7 +117,7 @@ while True:
     elif key == ord('c'):
         instruction = False
 
-    elif key == ord('s'):
+    elif key == ord('s') and not instruction:
         # Convert the frame to grayscale for OCR
         gray_frame = cv2.cvtColor(original_frame, cv2.COLOR_BGR2GRAY)
         pil_image = Image.fromarray(gray_frame)
