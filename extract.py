@@ -4,7 +4,7 @@ import os
 import re
 
 # Set your Google API key
-os.environ['GOOGLE_API_KEY'] = 'GEMINI API KEY'
+os.environ['GOOGLE_API_KEY'] = 'GEMENI API KEY'
 genai.configure(api_key=os.environ['GOOGLE_API_KEY'])
 model = genai.GenerativeModel('gemini-1.5-flash')
 
@@ -21,7 +21,9 @@ def parse_information(text):
         "City": "",
         "Postal Code": "",
         "Category":"",
-        "Choice of Subject": ""
+        "Choice of Subject": "",
+        'Department': '',
+        'Reg #': ''
     }
 
     # Updated regex patterns for each field
@@ -37,7 +39,9 @@ def parse_information(text):
         "City": re.compile(r"City:\s*([A-Za-z\s]+)(?=\n)"),
         "Category": re.compile(r"Category:\s*([A-Za-z\s]+)(?=\n)"),
         "Postal Code": re.compile(r"Postal Code:\s*(\d{5})(?=\n)"),
-        "Choice of Subject": re.compile(r"Choice of Subject:\s*([A-Za-z\s]+)(?=\n)"),
+        "Choice of Subject": re.compile(r"Choice of Subject:\s*([A-Za-z\s\(\),]+)(?=\n)"),
+        'Department': re.compile(r"Department:\s*([A-Za-z\s]+)(?=\n)"),
+        'Reg #': re.compile(r"Reg #:\s*([A-Za-z0-9\-]+)(?=\n)")
     }
 
 
