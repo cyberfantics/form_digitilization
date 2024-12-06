@@ -49,7 +49,6 @@ while True:
        
     # Detect hands if game is running
     hands, image = detector.findHands(frame) if detect_hand else (None, None)
-
     if detect_hand:
         if not stateResult:
             timer = time.time() - initialTime
@@ -67,19 +66,19 @@ while True:
                         student_card = False
                         challan = False
                         otherForm = True  
-                        resultText = "General Form!"
+                        resultText = "Selected Mode General Form!"
 
                     elif fingers == [1, 1, 1, 1, 1]:         
                         student_card = True
                         challan = False
                         otherForm = False  
-                        resultText = "Student Card!"
+                        resultText = "Selected Mode Student Card!"
 
                     elif fingers == [0, 1, 1, 0, 0]:
                         student_card = False
                         challan = True
                         otherForm = False 
-                        resultText = "Fee Chalan!" 
+                        resultText = "Selected Mode Fee Chalan!" 
 
                     else:
                         instruction = True
@@ -93,13 +92,12 @@ while True:
                     challan = None
                     otherForm = None # No hand detected
                     resultText = "No Hand Detected!"  # No hand detected message
-                    stateResult = True
-            
-
+                
+    # After detecting a move, reset state for next detection
     if stateResult:
-        cv2.putText(bgImg, f"Selected Mode", (745,180), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 255), 4)   
-        cv2.putText(bgImg, f"{resultText}", (715,380), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 255), 4)   
-                     
+        cv2.putText(bgImg, f"{resultText}", (715,380), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 255), 4)
+        detect_hand = False  # Stop detection until hand is needed again
+                
     # Display Text On Screen
     if display_text:
         # Set the text color to orange in BGR format
@@ -180,19 +178,23 @@ while True:
         break
 
     elif key == ord('i'):
+        stateResult = False
         instruction = True
     
     elif key == ord('c'):
+        stateResult = False
         instruction = False
 
     elif key == ord('s') and not instruction:
         # Convert the frame to grayscale for OCR
+        stateResult = False
         gray_frame = cv2.cvtColor(original_frame, cv2.COLOR_BGR2GRAY)
         pil_image = Image.fromarray(gray_frame)
         extract_text = extract_text_from_image(pil_image)
         display_text = True
 
     elif key == ord('r'):
+        stateResult = False
         display_text = False
     
     elif key == ord('h') and not instruction:
