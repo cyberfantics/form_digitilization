@@ -4,7 +4,7 @@ import os
 import re
 
 # Set your Google API key
-os.environ['GOOGLE_API_KEY'] = 'GEMENI API KEY'
+os.environ['GOOGLE_API_KEY'] = 'Google api'
 genai.configure(api_key=os.environ['GOOGLE_API_KEY'])
 model = genai.GenerativeModel('gemini-1.5-flash')
 
@@ -50,7 +50,10 @@ def parse_information(text):
         match = pattern.search(text)
         if match:
             parsed_data[key] = match.group(1).strip()
-
+    if not parsed_data['Reg #']:
+        reg_no =  re.search(r"Form No.:\s*([A-Za-z0-9\-]+)(?=\n)", text)
+        if reg_no:
+            parsed_data['Reg #'] = reg_no.group(1).strip()
     # Check for CNIC with two patterns
     if not parsed_data["CNIC/B.Form No"]:
         cn_value = re.search(r"CNIC:\s*(\d{13})", text)
