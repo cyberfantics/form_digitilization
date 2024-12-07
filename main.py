@@ -12,6 +12,11 @@ cam.set(4, 480)
 # Detect Hand
 detector = HandDetector(maxHands=1)
 
+# Video recording variables
+is_recording = False
+video_writer = None
+video_filename = 'recorded_video.mp4'
+
 # Camera Frame Variable
 # Define the region where the frame will be inserted
 top_left_y = 145
@@ -117,6 +122,10 @@ while True:
             cv2.putText(bgImg, f"Department:", (715,270), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 255), 4)   
             cv2.putText(bgImg, f"{extract_text['Department']}", (820,270), cv2.FONT_HERSHEY_SIMPLEX, 0.62, orange_color, 1)
 
+            # Update scores and instructions
+            cv2.putText(bgImg, f"Subject:", (715,300), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 255), 4)   
+            cv2.putText(bgImg, f"{extract_text['Choice of Subject']}", (820,300), cv2.FONT_HERSHEY_SIMPLEX, 0.62, orange_color, 1)
+            
         elif otherForm:    
             cv2.putText(bgImg, f"CNIC:", (715,240), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 255), 4)   
             cv2.putText(bgImg, f"{extract_text['CNIC/B.Form No']}", (820,240), cv2.FONT_HERSHEY_SIMPLEX, 0.62, orange_color, 1)
@@ -125,15 +134,26 @@ while True:
             cv2.putText(bgImg, f"{extract_text['Domicile']}", (820,270), cv2.FONT_HERSHEY_SIMPLEX, 0.62, orange_color, 1)
         
         if not student_card:
-            cv2.putText(bgImg, f"P. No:", (715,300), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 255), 4)   
-            cv2.putText(bgImg, f"{extract_text['Phone No']}", (820,300), cv2.FONT_HERSHEY_SIMPLEX, 0.62, orange_color, 1)
-            
-            cv2.putText(bgImg, f"Form No:", (715,330), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 255), 4)   
-            cv2.putText(bgImg, f"{extract_text['Form No']}", (855,330), cv2.FONT_HERSHEY_SIMPLEX, 0.62, orange_color, 1)
+            if challan:
+                cv2.putText(bgImg, f"P. No:", (715,240), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 255), 4)   
+                cv2.putText(bgImg, f"{extract_text['Phone No']}", (820,240), cv2.FONT_HERSHEY_SIMPLEX, 0.62, orange_color, 1)
+                
+                cv2.putText(bgImg, f"Form No:", (715,270), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 255), 4)   
+                cv2.putText(bgImg, f"{extract_text['Form No']}", (855,270), cv2.FONT_HERSHEY_SIMPLEX, 0.62, orange_color, 1)
 
-            cv2.putText(bgImg, f"Address:", (715,390), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 255), 4)   
-            cv2.putText(bgImg, f"{extract_text['Address']}", (855,390), cv2.FONT_HERSHEY_SIMPLEX, 0.62, orange_color, 1)
+                cv2.putText(bgImg, f"Address:", (715,300), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 255), 4)   
+                cv2.putText(bgImg, f"{extract_text['Address']}", (855,300), cv2.FONT_HERSHEY_SIMPLEX, 0.62, orange_color, 1)
             
+            else:
+                cv2.putText(bgImg, f"P. No:", (715,330), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 255), 4)   
+                cv2.putText(bgImg, f"{extract_text['Phone No']}", (820,330), cv2.FONT_HERSHEY_SIMPLEX, 0.62, orange_color, 1)
+                
+                cv2.putText(bgImg, f"Form No:", (715,390), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 255), 4)   
+                cv2.putText(bgImg, f"{extract_text['Form No']}", (855,390), cv2.FONT_HERSHEY_SIMPLEX, 0.62, orange_color, 1)
+
+                cv2.putText(bgImg, f"Address:", (715,300), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 255), 4)   
+                cv2.putText(bgImg, f"{extract_text['Address']}", (855,300), cv2.FONT_HERSHEY_SIMPLEX, 0.62, orange_color, 1)
+             
         if otherForm:
             cv2.putText(bgImg, f"Gender:", (715,360), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 255), 4)   
             cv2.putText(bgImg, f"{extract_text['Gender']}", (840,360), cv2.FONT_HERSHEY_SIMPLEX, 0.62, orange_color, 1)
@@ -148,10 +168,10 @@ while True:
             cv2.putText(bgImg, f"{extract_text['Category']}", (820,480), cv2.FONT_HERSHEY_SIMPLEX, 0.62, orange_color, 1)
                 
 
-       # Update scores and instructions
-        cv2.putText(bgImg, f"Subject:", (715,510), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 255), 4)   
-        cv2.putText(bgImg, f"{extract_text['Choice of Subject']}", (820,510), cv2.FONT_HERSHEY_SIMPLEX, 0.62, orange_color, 1)
-        
+            # Update scores and instructions
+            cv2.putText(bgImg, f"Subject:", (715,510), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 255), 4)   
+            cv2.putText(bgImg, f"{extract_text['Choice of Subject']}", (820,510), cv2.FONT_HERSHEY_SIMPLEX, 0.62, orange_color, 1)
+            
 
     # Store the original frame for processing
     original_frame = frame.copy()
@@ -171,19 +191,26 @@ while True:
     bgImg = cv2.resize(bgImg, (950, 650))
     cv2.imshow("Form Digitilization Using CV2 And AI", bgImg)
 
+    # Video recording logic
+    if is_recording:
+        video_writer.write(bgImg)
     
     # Key press handling
     key = cv2.waitKey(1) & 0xFF
+
+        
     if key == ord("q"):
         break
 
     elif key == ord('i'):
         stateResult = False
+        display_text = False
         instruction = True
     
     elif key == ord('c'):
         stateResult = False
         instruction = False
+        display_text = False
 
     elif key == ord('s') and not instruction:
         # Convert the frame to grayscale for OCR
@@ -201,7 +228,23 @@ while True:
         detect_hand = True
         stateResult = False
         initialTime = time.time()
+        display_text = False
+
+    elif key == ord('p'):  # Toggle recording with 'p'
+        if not is_recording:
+            # Start recording
+            is_recording = True
+            video_writer = cv2.VideoWriter(video_filename, cv2.VideoWriter_fourcc(*'XVID'), 20.0, (950, 650))
+            print("Recording started...")
+        else:
+            # Stop recording
+            is_recording = False
+            video_writer.release()
+            video_writer = None
+            print("Recording stopped.")
 
 # Release resources
 cam.release()
+if video_writer:
+    video_writer.release()
 cv2.destroyAllWindows()
