@@ -81,8 +81,17 @@ python main.py
 ---
 
 ## Screenshots 📸
+<div style="display: flex; justify-content: space-between;">
+  <img src="screenshots/1.png" width="30%" />
+  <img src="screenshots/2.png" width="30%" />
+  <img src="screenshots/3.png" width="30%" />
+</div>
 
-*Coming soon!*
+<div style="display: flex; justify-content: space-between;">
+  <img src="screenshots/4.png" width="30%" />
+  <img src="screenshots/5.png" width="30%" />
+  <img src="screenshots/6.png" width="30%" />
+</div>
 
 ---
 
@@ -98,4 +107,9 @@ This project is licensed under the **MIT License**.
 
 ---
 
+## Author
+**Syed Mansoor ul Hassan Bukhari**  
+[GitHub](https://github.com/cyberfantics) | [LinkedIn](https://www.linkedin.com/in/mansoor-bukhari/)
+
+---
 ### **Happy Digitizing!** 🎉
